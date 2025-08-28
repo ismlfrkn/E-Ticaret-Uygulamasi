@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { BreadcrumbModel } from '../pages/layouts/breadcrumb';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Common {
-  data:BreadcrumbModel[] = [];  
+   readonly data = signal<BreadcrumbModel[]>([]);
 
   set(data:BreadcrumbModel[])
   {
@@ -14,7 +14,8 @@ export class Common {
       url:"/",
       icon:"home"
     }
-    this.data = data;
-    this.data.unshift(val); //Val'ı her zaman listenin başına ekler.
+    this.data.set(data);
+    this.data.update(prev=>[val,...prev]); //Val'ı her zaman listenin başına ekler.
+    
   }
 }

@@ -13,8 +13,8 @@ import { Common } from '../services/common';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class Blank implements AfterViewInit {
-  readonly pageTitle = input.required<string>(); //Bu sayfalarda dışarıdan alınacak ve required ile değer almak zorunda kalacak.
   readonly breadcrumbs = input.required<BreadcrumbModel[]>();
+  readonly pageTitle = input.required<string>(); //Bu sayfalarda dışarıdan alınacak ve required ile değer almak zorunda kalacak.
   readonly #common = inject(Common);
 
   ngAfterViewInit(): void {
