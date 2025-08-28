@@ -7,141 +7,30 @@
             <!-- Bread Crumb -->
             <div class="breadcrumb-container position-relative d-none d-md-block" style="width: 250px;">
                 <nav aria-label="breadcrumb" class="modern-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item">
-                            <a href="#" class="d-flex align-items-center">
-                                <span class="material-symbols-outlined">home</span>
-                                <span>Home</span>
-                            </a>
-                        </li>
-                    </ol>
+                    <app-breadcrumb/>
                 </nav>
             </div>
 
-            <!-- Search Bar -->
-            <div class="search-container d-none d-md-block mx-auto">
-                <div class="position-relative">
-                    <input type="text" class="form-control search-input" placeholder="Search...">
-                    <span class="material-symbols-outlined search-icon">search</span>
-                </div>
-            </div>
 
             <div class="ms-auto d-flex align-items-center">
-                <!-- Language Selector -->
-                <div class="dropdown me-3 language-container">
-                    <button class="btn btn-link p-0 language-btn" type="button" id="languageDropdown"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://flagicons.lipis.dev/flags/4x3/tr.svg" alt="Türkçe" class="language-flag">
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="languageDropdown">
-                        <li>
-                            <a class="dropdown-item small-text" href="#">
-                                <img src="https://flagicons.lipis.dev/flags/4x3/gb.svg" alt="English"
-                                    class="language-flag me-2">
-                                English
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item small-text" href="#">
-                                <img src="https://flagicons.lipis.dev/flags/4x3/tr.svg" alt="Turkish"
-                                    class="language-flag me-2">
-                                Turkish
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item small-text" href="#">
-                                <img src="https://flagicons.lipis.dev/flags/4x3/de.svg" alt="Deutsch"
-                                    class="language-flag me-2">
-                                German
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Notification -->
-                <div class="dropdown me-3 notification-container">
-                    <button class="btn btn-link p-0 notification-btn position-relative" type="button"
-                        id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="material-symbols-outlined">notifications</span>
-                        <span class="notification-badge">3</span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow notification-dropdown"
-                        aria-labelledby="notificationDropdown">
-                        <li class="dropdown-header">Notifications</li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item notification-item" href="#">
-                                <div class="notification-icon bg-primary">
-                                    <span class="material-symbols-outlined">description</span>
-                                </div>
-                                <div class="notification-content">
-                                    <p class="notification-text">New invoice created</p>
-                                    <p class="notification-time">10 minutes ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item notification-item" href="#">
-                                <div class="notification-icon bg-success">
-                                    <span class="material-symbols-outlined">shopping_cart</span>
-                                </div>
-                                <div class="notification-content">
-                                    <p class="notification-text">New order received</p>
-                                    <p class="notification-time">1 hour ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item notification-item" href="#">
-                                <div class="notification-icon bg-warning">
-                                    <span class="material-symbols-outlined">error</span>
-                                </div>
-                                <div class="notification-content">
-                                    <p class="notification-text">Inventory alert</p>
-                                    <p class="notification-time">2 hours ago</p>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item text-center view-all" href="#">View All</a></li>
-                    </ul>
-                </div>
-
-                <!-- Theme Toggle Button -->
-                <div class="theme-toggle me-3">
-                    <button class="btn btn-link p-0" id="themeToggle" title="Dark/Light Mode">
-                        <span class="material-symbols-outlined theme-icon-light">light_mode</span>
-                        <span class="material-symbols-outlined theme-icon-dark d-none">dark_mode</span>
-                    </button>
-                </div>
-
                 <!-- User Dropdown -->
                 <div class="dropdown">
                     <a class="d-flex align-items-center text-decoration-none dropdown-toggle"
                         style="color: var(--text-color);" href="#" id="userDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="avatar">
-                            <img src="https://emuhasebe-dev.ecnorow.com/images/avatar/24.png" alt="User Avatar">
+                            <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery" alt="User Avatar">
                         </div>
                         <div class="d-flex flex-direction-column">
-                            <span class="d-none d-md-inline small-text">Jhon Doe</span>
-                            <span class="d-none d-md-inline small-x-text">{{'jhon@doe.com'}}</span>
+                            <span class="d-none d-md-inline small-text">Furkan</span>
+                            <span class="d-none d-md-inline small-x-text">furkan@gmail.com</span>
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
                         <li><a class="dropdown-item small-text" href="#"><span
                                     class="material-symbols-outlined me-2">account_circle</span>Profile</a></li>
-                        <li><a class="dropdown-item small-text" href="#"><span
-                                    class="material-symbols-outlined me-2">settings</span>Settings</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item small-text" href="#"><span
-                                    class="material-symbols-outlined me-2">logout</span>Logout</a></li>
+                        <li><a class="dropdown-item small-text" routerLink="/login"><span
+                                    class="material-symbols-outlined me-2">logout</span>Çıkış Yap</a></li>
                     </ul>
                 </div>
             </div>
@@ -185,7 +74,7 @@
                         <circle cx="25" cy="10" r="3" fill="url(#iconGradient)" opacity="0.7" />
                         <circle cx="25" cy="40" r="3" fill="url(#iconGradient)" opacity="0.7" />
                     </svg>
-                    <span>Stellar Admin</span>
+                    <span>Admin</span>
                 </a>
                 <button class="btn-close-sidebar d-md-none">
                     <span class="material-symbols-outlined">close</span>
@@ -195,398 +84,46 @@
             <!-- User Profile -->
             <div class="user-profile">
                 <div class="avatar">
-                    <img src="https://emuhasebe-dev.ecnorow.com/images/avatar/24.png" alt="User Avatar">
+                    <img src="https://api.dicebear.com/9.x/adventurer/svg?seed=Emery" alt="User Avatar">
                 </div>
                 <div class="user-info">
-                    <span class="user-name">Jhon Doe</span>
+                    <span class="user-name">Furkan Bilen</span>
                 </div>
             </div>
 
             <!-- Sidebar Search -->
             <div class="sidebar-search">
                 <div class="position-relative">
-                    <input type="text" class="form-control sidebar-search-input" placeholder="Search menu...">
+                    <input type="text" class="form-control sidebar-search-input" [(ngModel)]="search" placeholder="Aranacak Menu...">
                     <span class="material-symbols-outlined sidebar-search-icon">search</span>
                 </div>
             </div>
 
             <!-- Navigation Menu -->
             <ul class="nav-menu">
+                @for(nav of navigations() | nav:search();track nav.url)
+                {
                 <li class="nav-item">
-                    <a href="#" onclick="goto('dashboard')" class="nav-link active">
+                    <a [routerLink]="nav.url" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"  class="nav-link">
                         <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">dashboard</span>
-                            <span>Dashboard</span>
+                            <span class="nav-icon material-symbols-outlined">{{nav.icon}}</span>
+                            <span>{{nav.title}}</span>
                         </div>
                     </a>
                 </li>
-
-                <!-- MAIN SECTION -->
-                <li class="nav-category">MAIN</li>
-
-                <!-- Themes -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">palette</span>
-                            <span>Themes</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" id="lightThemeChange">
-                                <div class="nav-icon-text">
-                                    <span>Light</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" id="darkThemeChange">
-                                <div class="nav-icon-text">
-                                    <span>Dark</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Starter kit -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">rocket_launch</span>
-                            <span>Starter kit</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('blank')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Blank Page</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- FORMS SECTION -->
-                <li class="nav-category">FORMS</li>
-
-                <!-- Form components -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">input</span>
-                            <span>Form components</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('inputs')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Inputs</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('selects')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Selects</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('checkbox')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Checkbox & Radio</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('validation')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Validation</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Text editors -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">edit_note</span>
-                            <span>Text editors</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('basic-editor')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Basic Editor</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('advanced-editor')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Advanced Editor</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Pickers -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">calendar_month</span>
-                            <span>Pickers</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('date-picker')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Date Picker</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('time-picker')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Time Picker</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('color-picker')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Color Picker</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- COMPONENTS SECTION -->
-                <li class="nav-category">COMPONENTS</li>
-
-                <!-- Basic components -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">widgets</span>
-                            <span>Basic components</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('alert')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Alerts</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('badge')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Badges</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" onclick="goto('button')" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Buttons</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-cards.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Cards</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-modals.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Modals</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Content styling -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">format_paint</span>
-                            <span>Content styling</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="style-typography.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Typography</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="style-tables.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Tables</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="style-images.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Images</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Extra components -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">extension</span>
-                            <span>Extra components</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="component-charts.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Charts</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-datatables.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Data Tables</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="component-notifications.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Notifications</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Color system -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">palette</span>
-                            <span>Color system</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="colors-base.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Base Colors</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="colors-extended.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Extended Colors</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Animations -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">animation</span>
-                            <span>Animations</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="animations-transitions.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Transitions</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="animations-effects.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Effects</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <!-- Icons -->
-                <li class="nav-item">
-                    <a href="#" class="nav-link has-submenu">
-                        <div class="nav-icon-text">
-                            <span class="nav-icon material-symbols-outlined">star</span>
-                            <span>Icons</span>
-                        </div>
-                        <span class="material-symbols-outlined chevron-icon">chevron_right</span>
-                    </a>
-                    <ul class="submenu">
-                        <li class="nav-item">
-                            <a href="icons-material.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Material Icons</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="icons-fontawesome.html" class="nav-link">
-                                <div class="nav-icon-text">
-                                    <span>Font Awesome</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                }
             </ul>
 
             <!-- Sticky Footer Menu for Important Items (HTML) -->
             <div class="sidebar-sticky-menu">
                 <!-- Örneğin önemli ve sık kullanılan menüler -->
-                <a href="settings.html" class="sticky-menu-item" title="Settings">
+                <a href="#" class="sticky-menu-item" title="Ayarlar">
                     <span class="material-symbols-outlined">settings</span>
                 </a>
-                <a href="help.html" class="sticky-menu-item" title="Help">
+                <a href="#" class="sticky-menu-item" title="Yardım">
                     <span class="material-symbols-outlined">help</span>
                 </a>
-                <a href="logout.html" class="sticky-menu-item" title="Logout">
+                <a routerLink="/login" class="sticky-menu-item" title="Çıkış Yap">
                     <span class="material-symbols-outlined">logout</span>
                 </a>
             </div>
