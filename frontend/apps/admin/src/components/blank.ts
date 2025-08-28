@@ -6,7 +6,7 @@ import { Common } from '../services/common';
   selector:'app-blank',
   imports: [],
   template:`
-  <title>e-Ticaret Admin | {{pageTitle()}}</title>
+  <title>{{pageTitle()}}</title>
   
   `,
   encapsulation: ViewEncapsulation.None,
