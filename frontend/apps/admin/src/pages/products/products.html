@@ -1,11 +1,17 @@
 <app-blank pageTitle="Ürünler" [breadcrumbs]="[{title: 'Ürünler', url: '/products', icon:'deployed_code'}]"/>
 <flexi-grid 
-[data]="data()" 
+[data]="data()"
+[loading]="loading()"
 [showCaption]="true" 
 captionTitle="Ürün Listesi"
 [showExportExcelBtn]="true"
+exportExcelFileName="Ürünler"
 language="tr"
+(onRefresh)="reload()"
 >
+    <ng-template flexiGridCaptionCommandTemplate>
+        <flexi-button  routerLink="/products/create" btnIcon="add" btnColor="primary" title="Ürün Ekle" flexiTooltip></flexi-button>
+    </ng-template>
 
     <flexi-grid-column field="imageUrl" title="Ürün Resmi" textAlign="center" width="70px" [filterable]="false">
         <ng-template flexiGridCellTemplate let-item>
@@ -19,7 +25,7 @@ language="tr"
 
     <ng-template flexiGridColumnCommandTemplate let-item>
         <flexi-button btnIcon="edit" btnColor="info" btnSize="small" title="Güncelle" flexiTooltip/>
-         <flexi-button btnIcon="delete" btnColor="danger" btnSize="small" title="Sil" flexiTooltip/>
+         <flexi-button (click)="sil(item._id)" btnIcon="delete" btnColor="danger" btnSize="small" title="Sil" flexiTooltip/>
     </ng-template>
 
 </flexi-grid>
