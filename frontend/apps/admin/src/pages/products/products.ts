@@ -21,13 +21,21 @@ export default class Products {
   readonly reload = ()=> this.productService.listele.reload();
 
 
-   readonly categoryFilter = signal<FlexiGridFilterDataModel[]>([
-    { name: 'Telefon', value: 'Telefon' },
-    { name: 'Laptop', value: 'Laptop' },
-    { name: 'Masaüstü', value: 'Masaüstü' },
-    { name: 'Tablet', value: 'Tablet' },
-    { name: 'Aksesuar', value: 'Aksesuar' } // eksik olan kategori eklendi
-  ]);
+   readonly categoryFilter = computed<FlexiGridFilterDataModel[]>(() => {
+    const categories: { [key: string]: boolean } = {};
+  
+    this.data().forEach(item => {
+      if (!categories[item.categoryName]) {
+        categories[item.categoryName] = true;
+      }
+    });
+
+    return Object.keys(categories).map(name => ({
+      name,
+      value: name // artık value string, categoryName ile birebir eşleşiyor
+    }));
+  });
+
 
   readonly toast = inject(FlexiToastService);
 

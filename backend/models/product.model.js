@@ -19,13 +19,10 @@ const ProductSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
-    categoryId:{
-        type:String,
-        default:""
-    },
-    categoryName: {
-        type: String,
-        default:""
+    categoryId: {
+    type: mongoose.Schema.Types.ObjectId, // 🔑 kategoriye referans
+    ref: "Category",
+    required: true
     },
 
    },

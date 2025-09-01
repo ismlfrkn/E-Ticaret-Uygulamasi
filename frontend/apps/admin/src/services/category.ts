@@ -2,47 +2,39 @@ import { HttpClient, httpResource } from '@angular/common/http';
 import { computed, inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-export interface ProductModel {
-  _id: string;       // MongoDB id
-  name: string;
-  imageUrl?: string;
-  price: number;
-  stock: number;
-  categoryName: string;
-  categoryId:string;
+export interface CategoryModel{
+  _id:string,
+  name:string,
 }
+
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductService {
-  
+export class CategoryService {
   //GET ISTEĞI(TUM LISTE)
-  readonly listele = httpResource<ProductModel[]>(()=>"api/urun/listele");
+  readonly listele = httpResource<CategoryModel[]>(()=>"api/kategori/listele");
   readonly tum_veri = computed(() => this.listele.value() ?? []);
   readonly loading = computed(()=>this.listele.isLoading());
 
 
   readonly http = inject(HttpClient);
-  readonly ekleUrl = 'api/urun/ekle';
+  readonly ekleUrl = 'api/kategori/ekle';
   
-  urunEkle(product: any): Observable<any>{
+  urunEkle(category: any): Observable<any>{
     // Tek ürün gönderiyoruz, array’e çevirmeye gerek yok
-    return this.http.post(this.ekleUrl, product);
+    return this.http.post(this.ekleUrl, category);
   }
 
   urunSil(id:string)
   {
-    return this.http.delete(`api/urun/${id}`);
+    return this.http.delete(`api/kategori/${id}`);
   }
 
   urunGuncelle(id: string, product: any) {
-  return this.http.put(`api/urun/${id}`, product);
+  return this.http.put(`api/kategori/${id}`, product);
   }
 
-
-
-  
 
 }

@@ -1,0 +1,29 @@
+<app-blank pageTitle="Kategoriler" 
+[breadcrumbs]="[{title: 'Kategoriler', url: 'categories', icon:'category'}]"/>
+
+<flexi-grid
+[data]="data()"
+[loading]="loading()"
+language="tr"
+[showCaption]="true"
+captionTitle="Kategoriler"
+(onRefresh)="reload()"
+[showExportExcelBtn]="true"
+exportExcelFileName="Kategoriler">
+
+
+    <ng-template flexiGridCaptionCommandTemplate >
+        <flexi-button routerLink="/categories/create" btnIcon="add" btnColor="primary" title="Ekle" flexiTooltip />
+    </ng-template>
+    <flexi-grid-column field="name" title="Kategori Adı"/>
+
+    <ng-template flexiGridColumnCommandTemplate let-item>
+        <flexi-button [routerLink]="['/','categories','edit', item._id]" btnIcon="edit" btnColor="info" title="Güncelle" flexiTooltip />
+        <flexi-button (click)="sil(item._id)" btnIcon="delete" btnColor="danger" title="Sil" flexiTooltip />
+    </ng-template>
+
+    
+
+
+
+</flexi-grid>

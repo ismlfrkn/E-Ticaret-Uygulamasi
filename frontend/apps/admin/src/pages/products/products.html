@@ -21,7 +21,7 @@ language="tr"
     <flexi-grid-column field="name" title="Ürün Adı"/>
     <flexi-grid-column field="categoryName" title="Kategori" filterType="select" [filterData]="categoryFilter()"/>
     <flexi-grid-column field="price" title="Birim Fiyatı" filterType="number" textAlign="right" format="c" symbol="₺"/>
-    <flexi-grid-column field="stock" title="Stok Adeti" textAlign="right" filterType="number"/>
+    <flexi-grid-column field="stock" title="Stok Adeti" textAlign="right"/>
 
     <ng-template flexiGridColumnCommandTemplate let-item>
         <flexi-button  routerLink="/products/edit/{{item._id}}"  btnIcon="edit" btnColor="info" btnSize="small" title="Güncelle" flexiTooltip/>
