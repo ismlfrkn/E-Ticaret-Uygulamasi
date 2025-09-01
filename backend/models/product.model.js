@@ -6,12 +6,14 @@ const ProductSchema = new mongoose.Schema({
         required: [true, "Lütfen ürün adını giriniz"]
     },
     price: {
-        type: String,
+        type: Number,
         required: [true, "Lütfen ürün fiyatını giriniz"],
+        min: [0, "Fiyat negatif olamaz"]
     },
     stock: {
-        type: String,
+        type: Number,
         required: [true, "Lütfen ürün adetini giriniz"],
+        min: [0, "Ürün adeti negatif olamaz"]
     },
     imageUrl: {
         type: String,

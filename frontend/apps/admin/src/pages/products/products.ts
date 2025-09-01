@@ -31,12 +31,26 @@ export default class Products {
 
   readonly toast = inject(FlexiToastService);
 
-  sil(id:string)
-  {
-    this.toast.showSwal("Ürünü Sil?","Ürünü silmek istiyor musunuz?","Sil",()=>{
-      this.reload();
-    });
-  }
+  sil(id: string) {
+  this.toast.showSwal(
+    "Ürünü Sil?",
+    "Ürünü silmek istiyor musunuz?",
+    "Sil",
+    () => { // onay callback
+      this.productService.urunSil(id).subscribe({
+        next: () => {
+          this.toast.showToast("Başarılı", "Ürün başarıyla silindi", "success");
+          this.reload(); // listeyi yenile
+        },
+        error: (err) => {
+          console.error(err);
+          this.toast.showToast("Hata", "Ürün silinemedi", "error");
+        }
+      });
+    }
+  );
+}
+
 
 
 

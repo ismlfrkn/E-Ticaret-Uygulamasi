@@ -24,7 +24,7 @@ language="tr"
     <flexi-grid-column field="stock" title="Stok Adeti" textAlign="right" filterType="number"/>
 
     <ng-template flexiGridColumnCommandTemplate let-item>
-        <flexi-button btnIcon="edit" btnColor="info" btnSize="small" title="Güncelle" flexiTooltip/>
+        <flexi-button  routerLink="/products/edit/{{item._id}}"  btnIcon="edit" btnColor="info" btnSize="small" title="Güncelle" flexiTooltip/>
          <flexi-button (click)="sil(item._id)" btnIcon="delete" btnColor="danger" btnSize="small" title="Sil" flexiTooltip/>
     </ng-template>
 

@@ -31,6 +31,16 @@ export class ProductService {
     return this.http.post(this.ekleUrl, product);
   }
 
+  urunSil(id:string)
+  {
+    return this.http.delete(`http://localhost:5000/urun/${id}`);
+  }
+
+  urunGuncelle(id: string, product: any) {
+  return this.http.put(`http://localhost:5000/urun/${id}`, product);
+  }
+
+
 
   
 
