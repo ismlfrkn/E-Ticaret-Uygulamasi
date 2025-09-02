@@ -35,26 +35,26 @@ ekle(form: NgForm) {
 
   if (this.id()) {
     // Güncelleme işlemi
-    this.http.urunGuncelle(this.id(), formData).subscribe({
+    this.http.kategoriGuncelle(this.id(), formData).subscribe({
       next: (res) => {
-        this.toast.showToast("Başarılı", "Ürün başarıyla güncellendi", 'success');
+        this.toast.showToast("Başarılı", "Kategori başarıyla güncellendi", 'success');
         this.router.navigateByUrl("categories");
       },
       error: (err) => {
         console.error('Hata oluştu:', err);
-        this.toast.showToast("Hata", "Ürün güncellenemedi", 'error');
+        this.toast.showToast("Hata", "Kategori güncellenemedi", 'error');
       }
     });
   } else {
     // Yeni ürün ekleme işlemi
-    this.http.urunEkle(formData).subscribe({
+    this.http.kategoriEkle(formData).subscribe({
       next: (res) => {
-        this.toast.showToast("Başarılı", "Ürün başarıyla eklendi", 'success');
+        this.toast.showToast("Başarılı", "Kategori başarıyla eklendi", 'success');
         this.router.navigateByUrl("categories");
       },
       error: (err) => {
         console.error('Hata oluştu:', err);
-        this.toast.showToast("Hata", "Ürün eklenemedi", 'error');
+        this.toast.showToast("Hata", "Kategori eklenemedi", 'error');
       }
     });
   }

@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const Product = require("./models/product.model.js")
 const Category = require("./models/category.model.js");
+const User = require("./models/user.model.js");
 const cors = require('cors'); 
 
 const app = express();
@@ -22,7 +23,7 @@ mongoose.connect("mongodb+srv://admin:admin@eticaretdb.gcwgu6c.mongodb.net/E-Tic
     console.log("Connection failed");
 })
 
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------------*/
 app.get('/urun/listele', async (req, res) => {
   try {
     const products = await Product.find().populate("categoryId", "name").lean();
@@ -178,6 +179,101 @@ app.put('/kategori/:id', async (req, res) => {
     res.status(500).json({ message: "Kategori güncellenemedi", error: error.message });
   }
 });
+
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+// 1️⃣ KULLANICI LİSTELEME (GET)
+app.get('/kullanici/listele', async (req, res) => {
+  try {
+    const users = await User.find(); // Tüm kullanıcıları çek
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Kullanıcılar alınamadı', error: error.message });
+  }
+});
+
+// 2️⃣ KULLANICI EKLEME (POST)
+app.post('/kullanici/ekle', async (req, res) => {
+  try {
+    const user = new User(req.body); // Tek obje
+    const result = await user.save(); // MongoDB'ye ekle
+    res.status(201).json(result);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Kullanıcı eklenemedi', error: error.message });
+  }
+});
+
+// 3️⃣ KULLANICI SİLME (DELETE)
+app.delete('/kullanici/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Geçersiz ID" });
+    }
+
+    const result = await User.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    }
+
+    res.status(200).json({ message: "Kullanıcı başarıyla silindi" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kullanıcı silinemedi", error: error.message });
+  }
+});
+
+// 4️⃣ KULLANICI GÜNCELLEME (PUT)
+app.put('/kullanici/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedData = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Geçersiz ID" });
+    }
+
+    const result = await User.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!result) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    }
+
+    res.status(200).json({ message: "Kullanıcı başarıyla güncellendi", user: result });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kullanıcı güncellenemedi", error: error.message });
+  }
+});
+
+// KULLANICI GET BY ID
+app.get('/kullanici/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Geçersiz ID" });
+    }
+
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kullanıcı alınamadı", error: error.message });
+  }
+});
+
 
 
 

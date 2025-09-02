@@ -15,7 +15,6 @@ import { FlexiToastService } from 'flexi-toast';
 export default class Products {
 
   private productService = inject(ProductService);
-  private commonService =inject(Common);
   readonly data = this.productService.tum_veri;
   readonly loading = this.productService.loading;
   readonly reload = ()=> this.productService.listele.reload();

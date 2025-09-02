@@ -22,17 +22,17 @@ export class CategoryService {
   readonly http = inject(HttpClient);
   readonly ekleUrl = 'api/kategori/ekle';
   
-  urunEkle(category: any): Observable<any>{
+  kategoriEkle(category: any): Observable<any>{
     // Tek ürün gönderiyoruz, array’e çevirmeye gerek yok
     return this.http.post(this.ekleUrl, category);
   }
 
-  urunSil(id:string)
+  kategoriSil(id:string)
   {
     return this.http.delete(`api/kategori/${id}`);
   }
 
-  urunGuncelle(id: string, product: any) {
+  kategoriGuncelle(id: string, product: any) {
   return this.http.put(`api/kategori/${id}`, product);
   }
 

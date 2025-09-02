@@ -26,7 +26,7 @@ export default class Categories {
     "Ürünü silmek istiyor musunuz?",
     "Sil",
     () => { // onay callback
-      this.categoryService.urunSil(id).subscribe({
+      this.categoryService.kategoriSil(id).subscribe({
         next: () => {
           this.toast.showToast("Başarılı", "Ürün başarıyla silindi", "success");
           this.reload(); // listeyi yenile

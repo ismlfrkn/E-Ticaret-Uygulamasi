@@ -20,5 +20,11 @@ export const navigations:NavigationModel[] = [
         title:"Kategoriler",
         url:"/categories",
         icon:"category"
+    },
+    {
+        title: 'Kullanıcılar', 
+        url: '/users', 
+        icon:'emoji_people'
     }
+
 ]

@@ -1,6 +1,5 @@
 import { Injectable, signal } from '@angular/core';
 import { BreadcrumbModel } from '../pages/layouts/breadcrumb';
-import { FlexiGridFilterDataModel } from 'flexi-grid';
 
 @Injectable({
   providedIn: 'root'

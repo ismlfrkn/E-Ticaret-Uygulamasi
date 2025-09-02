@@ -5,14 +5,13 @@ import { ProductService } from '../../../services/product';
 import { FlexiToastService } from 'flexi-toast';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../services/category';
-import { CommonModule } from '@angular/common';
 
 
 
 
 
 @Component({
-  imports: [Blank, FormsModule,CommonModule],
+  imports: [Blank, FormsModule],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
