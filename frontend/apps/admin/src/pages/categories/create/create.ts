@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Blank from '../../../components/blank';
 import { FlexiToastService } from 'flexi-toast';
 import { CategoryService } from '../../../services/category';
+import { BreadcrumbModel } from '../../layouts/breadcrumb';
 
 @Component({
   imports: [Blank,FormsModule],
@@ -14,15 +15,29 @@ import { CategoryService } from '../../../services/category';
 export default class Create {
   id = signal<string>("");
   readonly activate = inject(ActivatedRoute);
-  readonly cardTitle = computed(()=>this.id() ? 'Kategori Güncelle':'Kategori Ekle');
+  readonly title = computed(()=>this.id() ? 'Kategori Güncelle':'Kategori Ekle');
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
-  constructor()
-  {
-    this.activate.params.subscribe(res =>{
-      if(res["id"])
-        this.id.set(res["id"]);
-    })
-  }
+  
+    readonly breadcrumbs = signal<BreadcrumbModel[]>([
+    {title: 'Kategoriler', url: '/categories', icon:'category'},
+    ])
+  constructor() {
+  this.activate.params.subscribe(res => {
+    if (res["id"]) {
+      this.id.set(res["id"]);
+      this.breadcrumbs.update(prev => [
+        ...prev,
+        { title: 'Kategori Güncelle', url: `/categories/edit/${this.id()}`, icon: 'edit' }
+      ]);
+    } else {
+      this.breadcrumbs.update(prev => [
+        ...prev,
+        { title: 'Kategori Ekle', url: '/categories/create', icon: 'add' }
+      ]);
+    }
+  });
+}
+
 
   readonly http = inject(CategoryService);
   readonly toast = inject(FlexiToastService);

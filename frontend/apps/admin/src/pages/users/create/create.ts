@@ -4,6 +4,7 @@ import { FlexiToastService } from 'flexi-toast';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import Blank from '../../../components/blank';
+import { BreadcrumbModel } from '../../layouts/breadcrumb';
 
 @Component({
   imports: [FormsModule,Blank],
@@ -14,10 +15,20 @@ import Blank from '../../../components/blank';
 export default class Create {
   id = signal<string>("");
   readonly activate = inject(ActivatedRoute);
-  readonly cardTitle = computed(()=>this.id() ? 'Kullanıcı Güncelle':'Kullanıcı Ekle');
+  readonly title = computed(()=>this.id() ? 'Kullanıcı Güncelle':'Kullanıcı Ekle');
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
   
   
+  
+  
+  
+  readonly breadcrumbs = signal<BreadcrumbModel[]>([
+  {title: 'Kullanıcılar', url: '/users', icon:'emoji_people'},
+  ])
+
+  
+
+
   currentUser = signal<UserModel | null>(null);
   constructor()
   {
@@ -26,12 +37,18 @@ export default class Create {
         this.id.set(res["id"]);
         this.http.kullaniciById(res["id"]).subscribe(user => {
           this.currentUser.set(user);
-          console.log(this.currentUser);
         });
+        this.breadcrumbs.update(prev => [...prev,
+          {title: 'Kullanıcı Güncelle', url: `/users/edit/${this.id()}`, icon:'edit'}
+        ])
+      }
+      else{
+        this.breadcrumbs.update(prev => [...prev,
+          {title: 'Kullanıcı Ekle', url: '/users', icon:'person_add'}
+         ])
       }
     })
   }
-
 
   
   readonly http = inject(UserService);
