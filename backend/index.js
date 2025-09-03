@@ -240,16 +240,32 @@ app.get('/kategori/:id', async (req, res) => {
 /*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-// KULLANICI LİSTELEME (GET)
+// KULLANICI LİSTELEME veya LOGIN KONTROLÜ
 app.get('/kullanici/listele', async (req, res) => {
   try {
-    const users = await User.find(); // Tüm kullanıcıları çek
+    const { userName, password } = req.query;  // query parametrelerini oku
+
+    if (userName && password) {
+      // Kullanıcı adı ve şifre ile kontrol
+      const user = await User.findOne({ userName, password });
+
+      if (!user) {
+        return res.status(401).json({ message: "Geçersiz kullanıcı adı veya şifre" });
+      }
+
+      return res.json(user);
+    }
+
+    // Eğer parametre gelmemişse -> tüm kullanıcıları döndür
+    const users = await User.find();
     res.json(users);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Kullanıcılar alınamadı', error: error.message });
   }
 });
+
 
 // KULLANICI EKLEME (POST)
 app.post('/kullanici/ekle', async (req, res) => {
@@ -329,6 +345,8 @@ app.get('/kullanici/:id', async (req, res) => {
     res.status(500).json({ message: "Kullanıcı alınamadı", error: error.message });
   }
 });
+
+
 
 
 
