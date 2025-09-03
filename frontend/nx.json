@@ -33,7 +33,8 @@
       "linter": "eslint",
       "style": "css",
       "unitTestRunner": "none"
-    },"@schematics/angular:component": {
+    },
+    "@schematics/angular:component": {
       "changeDetection": "OnPush",
       "viewEncapsulation": "None",
       "style": "none",
