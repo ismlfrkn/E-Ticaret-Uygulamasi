@@ -23,7 +23,10 @@ mongoose.connect("mongodb+srv://admin:admin@eticaretdb.gcwgu6c.mongodb.net/E-Tic
     console.log("Connection failed");
 })
 
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*---------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 app.get('/urun/listele', async (req, res) => {
   try {
     const products = await Product.find().populate("categoryId", "name").lean();
@@ -103,7 +106,37 @@ app.put('/urun/:id', async (req, res) => {
   }
 });
 
+// URUN GET BY ID
+app.get('/urun/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Geçerli MongoDB ObjectId kontrolü
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Geçersiz ID" });
+    }
+
+    // Product modelini import ettiğini varsayıyoruz
+    const product = await Product.findById(id).populate("categoryId", "name");
+
+    if (!product) {
+      return res.status(404).json({ message: "Ürün bulunamadı" });
+    }
+
+    res.status(200).json({
+      ...product.toObject(),
+      categoryName: product.categoryId?.name || "Bilinmeyen kategori",
+      categoryId: product.categoryId?._id || null
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Ürün alınamadı", error: error.message });
+  }
+});
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 /*-------------------------------------------------------------------------------------------------------------------------------------------------- */
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 //KATEGORİ LISTELEME İŞLEMİ (GET)
 app.get('/kategori/listele', async (req, res) => {
@@ -180,11 +213,34 @@ app.put('/kategori/:id', async (req, res) => {
   }
 });
 
+// ID'E GORE KATEGORİ ÇAĞIRMA
+app.get('/kategori/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    // Geçerli MongoDB ObjectId kontrolü
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: "Geçersiz ID" });
+    }
+
+    const category = await Category.findById(id); // Category modelini import etmelisin
+
+    if (!category) {
+      return res.status(404).json({ message: "Kategori bulunamadı" });
+    }
+
+    res.status(200).json(category);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Kategori alınamadı", error: error.message });
+  }
+});
 
 /*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-
-// 1️⃣ KULLANICI LİSTELEME (GET)
+// KULLANICI LİSTELEME (GET)
 app.get('/kullanici/listele', async (req, res) => {
   try {
     const users = await User.find(); // Tüm kullanıcıları çek
@@ -195,7 +251,7 @@ app.get('/kullanici/listele', async (req, res) => {
   }
 });
 
-// 2️⃣ KULLANICI EKLEME (POST)
+// KULLANICI EKLEME (POST)
 app.post('/kullanici/ekle', async (req, res) => {
   try {
     const user = new User(req.body); // Tek obje
@@ -207,7 +263,7 @@ app.post('/kullanici/ekle', async (req, res) => {
   }
 });
 
-// 3️⃣ KULLANICI SİLME (DELETE)
+// KULLANICI SİLME (DELETE)
 app.delete('/kullanici/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -229,7 +285,7 @@ app.delete('/kullanici/:id', async (req, res) => {
   }
 });
 
-// 4️⃣ KULLANICI GÜNCELLEME (PUT)
+// KULLANICI GÜNCELLEME (PUT)
 app.put('/kullanici/:id', async (req, res) => {
   try {
     const id = req.params.id;
@@ -252,7 +308,7 @@ app.put('/kullanici/:id', async (req, res) => {
   }
 });
 
-// KULLANICI GET BY ID
+// ID'E GORE KULLANICI ÇAĞIRMA
 app.get('/kullanici/:id', async (req, res) => {
   try {
     const id = req.params.id;

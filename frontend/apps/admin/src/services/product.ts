@@ -41,7 +41,9 @@ export class ProductService {
   return this.http.put(`api/urun/${id}`, product);
   }
 
-
+    urunById(id: string): Observable<ProductModel> {
+    return this.http.get<ProductModel>(`api/urun/${id}`);
+  }
 
   
 

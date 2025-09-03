@@ -20,25 +20,23 @@ export default class Categories {
 
 
 
-  sil(id: string) {
-  this.toast.showSwal(
-    "Ürünü Sil?",
-    "Ürünü silmek istiyor musunuz?",
-    "Sil",
-    () => { // onay callback
-      this.categoryService.kategoriSil(id).subscribe({
-        next: () => {
-          this.toast.showToast("Başarılı", "Ürün başarıyla silindi", "success");
-          this.reload(); // listeyi yenile
-        },
-        error: (err) => {
-          console.error(err);
-          this.toast.showToast("Hata", "Ürün silinemedi", "error");
-        }
-      });
-    }
-  );
-}
-
-
+    sil(id: string) {
+    this.toast.showSwal(
+      "Ürünü Sil?",
+      "Ürünü silmek istiyor musunuz?",
+      "Sil",
+      () => { // onay callback
+        this.categoryService.kategoriSil(id).subscribe({
+          next: () => {
+            this.toast.showToast("Başarılı", "Ürün başarıyla silindi", "success");
+            this.reload(); // listeyi yenile
+          },
+          error: (err) => {
+            console.error(err);
+            this.toast.showToast("Hata", "Ürün silinemedi", "error");
+          }
+        });
+      }
+    );
+  }
 }

@@ -10,19 +10,19 @@
                 <form #form="ngForm" autocomplete="off" (ngSubmit)="ekle(form)">
                     <div class="form-group">
                         <label for="name">Ürün Adı</label>
-                        <input type="text" class="form-control" ngModel name="name">
+                        <input type="text" class="form-control" ngModel name="name" [placeholder]="data()?.name || ''" [ngModel]="data()?.name">
                     </div>
                     <div class="form-group mt-2">
                         <label for="imageUrl">Ürün Resmi</label>
-                        <input type="text" class="form-control" ngModel name="imageUrl">
+                        <input type="text" class="form-control" ngModel name="imageUrl" [placeholder]="data()?.imageUrl || ''" [ngModel]="data()?.imageUrl">
                     </div>
                     <div class="form-group mt-2">
                         <label for="price">Ürün Fiyatı</label>
-                        <input type="number" class="form-control" ngModel name="price" mask="">
+                        <input type="number" class="form-control" ngModel name="price" [placeholder]="data()?.price || ''" [ngModel]="data()?.price">
                     </div>
                     <div class="form-group mt-2">
                         <label for="stock">Stok Adeti</label>
-                        <input type="number" class="form-control" ngModel name="stock">
+                        <input type="number" class="form-control" ngModel name="stock" [placeholder]="data()?.stock || ''" [ngModel]="data()?.stock">
                     </div>
                     <div class="form-group mt-2">
                         <label for="categoryId">Kategori</label>

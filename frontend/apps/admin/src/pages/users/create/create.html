@@ -17,7 +17,8 @@
               class="form-control" 
               ngModel 
               name="firstName" 
-              [placeholder]="currentUser()?.firstName || ''">
+              [placeholder]="data()?.firstName || ''"
+              [ngModel]="data()?.firstName">
           </div>
 
           <!-- Soyad -->
@@ -28,7 +29,8 @@
               class="form-control" 
               ngModel 
               name="lastName" 
-              [placeholder]="currentUser()?.lastName || ''">
+              [placeholder]="data()?.lastName || ''"
+              [ngModel]="data()?.lastName">
           </div>
 
           <!-- Kullanıcı Adı -->
@@ -39,7 +41,8 @@
               class="form-control" 
               ngModel 
               name="userName" 
-              [placeholder]="currentUser()?.userName || ''">
+              [placeholder]="data()?.userName || ''"
+              [ngModel]="data()?.userName">
           </div>
 
           <!-- E-posta -->
@@ -50,7 +53,8 @@
               class="form-control" 
               ngModel 
               name="email" 
-              [placeholder]="currentUser()?.email || ''">
+              [placeholder]="data()?.email || ''"
+              [ngModel]="data()?.email">
           </div>
 
           <!-- Şifre -->
@@ -61,7 +65,8 @@
               class="form-control" 
               ngModel 
               name="password" 
-              [placeholder]="currentUser() ? '********' : ''">
+              [placeholder]="data() ? '********' : ''"
+              [ngModel]="data()?.password">
           </div>
 
           <!-- Submit butonu -->

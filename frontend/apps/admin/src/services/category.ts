@@ -36,5 +36,9 @@ export class CategoryService {
   return this.http.put(`api/kategori/${id}`, product);
   }
 
+  kategoriById(id: string): Observable<CategoryModel> {
+    return this.http.get<CategoryModel>(`api/kategori/${id}`);
+  }
+
 
 }

@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
 import { UserModel, UserService } from '../../../services/user';
 import { FlexiToastService } from 'flexi-toast';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule, NgForm } from '@angular/forms';
 import Blank from '../../../components/blank';
 import { BreadcrumbModel } from '../../layouts/breadcrumb';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   imports: [FormsModule,Blank],
@@ -18,29 +19,27 @@ export default class Create {
   readonly title = computed(()=>this.id() ? 'Kullanıcı Güncelle':'Kullanıcı Ekle');
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
   
-  
-  
-  
-  
+   readonly result = resource({
+  params: () => this.id(),
+  loader: async () => {
+    const res = await lastValueFrom(this.http.kullaniciById(this.id()));
+    return res;
+  }
+});
+
+  readonly data = linkedSignal(() => this.result.value());
+
   readonly breadcrumbs = signal<BreadcrumbModel[]>([
   {title: 'Kullanıcılar', url: '/users', icon:'emoji_people'},
   ])
 
-  
-
-
-  currentUser = signal<UserModel | null>(null);
   constructor()
   {
     this.activate.params.subscribe(res =>{
       if(res["id"]) {
         this.id.set(res["id"]);
-        this.http.kullaniciById(res["id"]).subscribe(user => {
-          this.currentUser.set(user);
-        });
         this.breadcrumbs.update(prev => [...prev,
-          {title: 'Kullanıcı Güncelle', url: `/users/edit/${this.id()}`, icon:'edit'}
-        ])
+          {title: "Kullanıcı Güncelle", url: `/users/edit/${this.id()}`, icon: 'edit'},]);
       }
       else{
         this.breadcrumbs.update(prev => [...prev,

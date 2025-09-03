@@ -1,18 +1,20 @@
 import { FormsModule, NgForm } from '@angular/forms';
 import Blank from '../../../components/blank';
-import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewEncapsulation } from '@angular/core'; 
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core'; 
 import { ProductService } from '../../../services/product';
 import { FlexiToastService } from 'flexi-toast';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../services/category';
 import { BreadcrumbModel } from '../../layouts/breadcrumb';
+import { lastValueFrom } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 
 
 
 
 @Component({
-  imports: [Blank, FormsModule],
+  imports: [Blank, FormsModule,CommonModule],
   templateUrl: './create.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -23,6 +25,16 @@ export default class ProductCreate {
   readonly title = computed(()=>this.id() ? 'Ürün Güncelle':'Ürün Ekle');
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
 
+
+   readonly result = resource({
+    params: () => this.id(),
+    loader: async () => {
+      const res = await lastValueFrom(this.http.urunById(this.id()));
+      return res;
+    }
+  });
+
+  readonly data = linkedSignal(() => this.result.value());
 
   readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {title: 'Ürünler', url: '/products', icon:'deployed_code'},
@@ -50,9 +62,7 @@ export default class ProductCreate {
 
 
   readonly http2 = inject(CategoryService);
-  readonly categories = computed(() => this.http2.tum_veri());
-  
-
+  readonly categories = this.http2.tum_veri;
 
 
   ekle(form: NgForm) {

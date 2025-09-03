@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, resource, signal, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from '../../../components/blank';
 import { FlexiToastService } from 'flexi-toast';
 import { CategoryService } from '../../../services/category';
 import { BreadcrumbModel } from '../../layouts/breadcrumb';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   imports: [Blank,FormsModule],
@@ -17,7 +18,22 @@ export default class Create {
   readonly activate = inject(ActivatedRoute);
   readonly title = computed(()=>this.id() ? 'Kategori Güncelle':'Kategori Ekle');
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
+   
   
+  readonly result = resource({
+  params: () => this.id(),
+  loader: async () => {
+    const res = await lastValueFrom(this.http.kategoriById(this.id()));
+    return res;
+  }
+});
+
+  readonly data = linkedSignal(() => this.result.value());
+
+  
+
+
+
     readonly breadcrumbs = signal<BreadcrumbModel[]>([
     {title: 'Kategoriler', url: '/categories', icon:'category'},
     ])
