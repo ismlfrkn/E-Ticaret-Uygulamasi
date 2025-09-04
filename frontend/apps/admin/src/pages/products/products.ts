@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject, signal, ViewEncapsulation } from '@angular/core';
 import Blank from '../../components/blank';
 import { FlexiGridFilterDataModel, FlexiGridModule } from 'flexi-grid';
-import { ProductService } from '../../services/product';
+import { ProductService } from '@shared/services/product';
 import { RouterLink } from '@angular/router';
-import { Common } from '../../services/common';
+import { Common } from '@shared/services/common';
 import { FlexiToastService } from 'flexi-toast';
 
 @Component({

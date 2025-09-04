@@ -3,7 +3,7 @@ import Blank from '../../components/blank';
 import { FlexiGridModule } from 'flexi-grid';
 import { RouterLink } from '@angular/router';
 import { FlexiToastService } from 'flexi-toast';
-import { CategoryService } from '../../services/category';
+import { CategoryService } from '@shared/services/category';
 
 @Component({
   imports: [Blank,FlexiGridModule,RouterLink],

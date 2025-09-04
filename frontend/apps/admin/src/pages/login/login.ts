@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { UserModel } from '../../services/user';
+import { UserModel } from '@shared/services/user';
 import { FlexiToastService } from 'flexi-toast';
 import { Router } from '@angular/router';
 

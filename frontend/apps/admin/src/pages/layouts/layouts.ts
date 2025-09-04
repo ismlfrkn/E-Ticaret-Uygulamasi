@@ -5,7 +5,7 @@ import { navigations } from '../../navigation';
 import { NavPipe } from '../../pipes/nav-pipe';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { Common } from '../../services/common';
+import { Common } from '@shared/services/common';
 
 @Component({
   imports: [

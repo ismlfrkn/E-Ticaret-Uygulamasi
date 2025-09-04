@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, ViewEncapsulation } from '@angular/core';
 import Blank from '../../components/blank';
 import { FlexiGridModule } from 'flexi-grid';
-import { UserModel, UserService } from '../../services/user';
+import { UserModel, UserService } from '@shared/services/user';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { FlexiToastService } from 'flexi-toast';

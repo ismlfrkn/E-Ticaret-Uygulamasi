@@ -29,18 +29,47 @@ mongoose.connect("mongodb+srv://admin:admin@eticaretdb.gcwgu6c.mongodb.net/E-Tic
 
 app.get('/urun/listele', async (req, res) => {
   try {
-    const products = await Product.find().populate("categoryId", "name").lean();
+    const page = parseInt(req.query.page);
+    const pageSize = parseInt(req.query.pageSize);
+    const categoryKey = req.query.categoryKey;
+
+    const isPagination = Number.isInteger(page) && Number.isInteger(pageSize);
+
+    const categoryFilter = categoryKey && mongoose.Types.ObjectId.isValid(categoryKey)
+      ? { categoryId: new mongoose.Types.ObjectId(categoryKey) }
+      : {};
+
+    let query = Product.find(categoryFilter)
+      .populate("categoryId", "name key")
+      .lean();
+
+    if (isPagination) {
+      query = query.skip((page - 1) * pageSize).limit(pageSize);
+    }
+
+    const products = await query.exec();
+
     const result = products.map(p => ({
       ...p,
       categoryName: p.categoryId?.name || "Bilinmeyen kategori",
       categoryId: p.categoryId?._id || null
     }));
-    res.json(result);
+
+    if (isPagination) {
+      const totalCount = await Product.countDocuments(categoryFilter);
+      return res.json({ items: result, totalCount });
+    } else {
+      return res.json(result);
+    }
   } catch (error) {
     console.error("ÜRÜN LİSTELEME HATASI:", error);
     res.status(500).json({ message: 'Ürünler alınamadı', error: error.message });
   }
 });
+
+
+
+
 
 
 //URUN EKLEME İŞLEMİ (POST)

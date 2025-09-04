@@ -1,0 +1,50 @@
+<title>Moriva | Ana Sayfa</title>
+
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-content">
+    <h1>En Yeni Teknoloji Ürünleri</h1>
+    <p>Kaliteli ve uygun fiyatlı teknoloji ürünleri için doğru adres</p>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section class="products">
+  <div class="container">
+    <h2 class="section-title">Ürünler</h2>
+    <div class="products-grid" [class.loaded]="data().length > 0">
+  @for (val of data(); track val._id) {
+    <div class="product-card">
+      <img [src]="val.imageUrl" [alt]="val.name" />
+      <h3>{{ val.name }}</h3>
+      <p class="price">{{ val.price | trCurrency: '₺': false }}</p>
+      <button class="add-to-cart">Sepete Ekle</button>
+    </div>
+  }
+</div>
+    <div class="pagination-controls">
+  <button
+    class="add-to-cart"
+    (click)="oncekiSayfa()"
+    [disabled]="aktifSayfa() === 1"
+  >
+    ← Önceki
+  </button>
+
+  <h3 class="page-info">
+    Sayfa {{ aktifSayfa() }} / {{ toplamSayfa() }}
+  </h3>
+
+  <button
+    class="add-to-cart"
+    (click)="sonrakiSayfa()"
+    [disabled]="aktifSayfa() === toplamSayfa()"
+  >
+    Sonraki →
+  </button>
+</div>
+
+
+  </div>
+</section>

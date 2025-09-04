@@ -23,7 +23,6 @@ export class ProductService {
   readonly tum_veri = computed(() => this.listele.value() ?? []);
   readonly loading = computed(()=>this.listele.isLoading());
 
-
   readonly http = inject(HttpClient);
   readonly ekleUrl = 'api/urun/ekle';
   

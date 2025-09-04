@@ -1,12 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal, ViewEncapsulation } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Common } from '../../services/common';
-
-export interface BreadcrumbModel{
-  title:string;
-  url:string;
-  icon:string;
-}
+import { Common } from '@shared/services/common';
+import {BreadcrumbModel} from '@shared/models/breadcrumb.model'
 
 @Component({
   selector:'app-breadcrumb',

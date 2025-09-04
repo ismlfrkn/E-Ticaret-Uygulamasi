@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, inject, input, ViewEncapsulation } from '@angular/core';
-import { BreadcrumbModel } from '../pages/layouts/breadcrumb';
-import { Common } from '../services/common';
+import { BreadcrumbModel } from '@shared/models/breadcrumb.model';
+import { Common } from '@shared/services/common';
 
 @Component({
   selector:'app-blank',

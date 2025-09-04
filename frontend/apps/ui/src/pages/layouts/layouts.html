@@ -1,0 +1,67 @@
+<nav class="navbar">
+  <div class="nav-container">
+    <div class="nav-logo">
+      <h2>Moriva</h2>
+    </div>
+    <ul class="nav-menu">
+     <li>
+        <a routerLink="" class="nav-link">Tüm Ürünler</a>
+      </li>
+      @for(val of data(); track val._id){
+      <li>
+        <a [routerLink]="['/',val._id]" class="nav-link">{{val.name}}</a>
+      </li>
+    }
+    </ul>
+    <div class="nav-icons">
+      <i class="fas fa-search"></i>
+      <i class="fas fa-shopping-cart"></i>
+      <i class="fas fa-user"></i>
+    </div>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Moriva</h3>
+        <p>Teknolojinin gücünü yaşayın</p>
+      </div>
+      <div class="footer-section">
+        <h4>Kategoriler</h4>
+        <ul>
+          @for(val of data(); track val._id){
+      <li>
+        <a [routerLink]="['/',val._id]" class="nav-link">{{val.name}}</a>
+      </li>
+    }
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Müşteri Hizmetleri</h4>
+        <ul>
+          <li><a href="#">İletişim</a></li>
+          <li><a href="#">Kargo Takip</a></li>
+          <li><a href="#">İade & Değişim</a></li>
+          <li><a href="#">SSS</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Bizi Takip Edin</h4>
+        <div class="social-icons">
+          <i class="fab fa-facebook"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Moriva. Tüm hakları saklıdır.</p>
+    </div>
+  </div>
+</footer>

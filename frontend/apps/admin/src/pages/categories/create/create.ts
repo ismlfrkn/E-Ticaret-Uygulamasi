@@ -3,8 +3,8 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Blank from '../../../components/blank';
 import { FlexiToastService } from 'flexi-toast';
-import { CategoryService } from '../../../services/category';
-import { BreadcrumbModel } from '../../layouts/breadcrumb';
+import { CategoryService } from '@shared/services/category';
+import { BreadcrumbModel } from '@shared/models/breadcrumb.model';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -20,9 +20,12 @@ export default class Create {
   readonly btnName = computed(()=>this.id() ? 'Güncelle':'Kaydet');
    
   
-  readonly result = resource({
+readonly result = resource({
   params: () => this.id(),
   loader: async () => {
+    if (!this.id()) {
+      return 
+    }
     const res = await lastValueFrom(this.http.kategoriById(this.id()));
     return res;
   }

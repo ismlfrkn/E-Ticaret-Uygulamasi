@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { BreadcrumbModel } from '../pages/layouts/breadcrumb';
+import { BreadcrumbModel } from '../models/breadcrumb.model';
 import { UserModel } from './user';
 
 @Injectable({

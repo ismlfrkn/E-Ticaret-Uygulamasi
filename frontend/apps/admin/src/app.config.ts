@@ -10,7 +10,7 @@ import { appRoutes } from './app.routes';
 import { registerLocaleData } from '@angular/common';
 import localeTr from '@angular/common/locales/tr'
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import { endpointInterceptor } from './interceptors/endpoint-interceptor';
+import { endpointInterceptor } from '@shared/interceptors/endpoint-interceptor';
 registerLocaleData(localeTr);
 
 export const appConfig: ApplicationConfig = {
