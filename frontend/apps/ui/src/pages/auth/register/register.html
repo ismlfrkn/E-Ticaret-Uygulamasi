@@ -1,0 +1,162 @@
+<div class="login-header">
+  <div class="login-icon">
+    <i class="fas fa-user-circle"></i>
+  </div>
+  <h1>Hoş Geldiniz</h1>
+  <p>Hesabınızı oluşturarak alışverişe devam edin</p>
+</div>
+
+<div class="login-tabs">
+  <button routerLink="/auth/login" class="tab-btn" data-tab="login">
+    <i class="fas fa-sign-in-alt"></i>
+    Giriş Yap
+  </button>
+  <button
+    routerLink="/auth/register"
+    class="tab-btn active"
+    data-tab="register"
+  >
+    <i class="fas fa-user-plus"></i>
+    Kayıt Ol
+  </button>
+</div>
+
+<!-- Register Form -->
+<div class="tab-content active" id="register">
+  <form #form="ngForm" class="auth-form" (ngSubmit)="signUp(form)">
+    <!-- Ad -->
+    <div class="form-group">
+      <label for="firstName">Ad</label>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input
+          type="text"
+          id="firstName"
+          name="firstName"
+          ngModel
+          #firstName="ngModel"
+          required
+          placeholder="Adınız"
+        />
+      </div>
+      <div class="error-message" *ngIf="form.submitted && firstName.invalid">
+        <span *ngIf="firstName.errors?.['required']">Ad alanı zorunludur.</span>
+      </div>
+    </div>
+
+    <!-- Soyad -->
+    <div class="form-group">
+      <label for="lastName">Soyad</label>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input
+          type="text"
+          id="lastName"
+          name="lastName"
+          ngModel
+          #lastName="ngModel"
+          required
+          placeholder="Soyadınız"
+        />
+      </div>
+      <div class="error-message" *ngIf="form.submitted && lastName.invalid">
+        <span *ngIf="lastName.errors?.['required']"
+          >Soyad alanı zorunludur.</span
+        >
+      </div>
+    </div>
+
+    <!-- Kullanıcı Adı -->
+    <div class="form-group">
+      <label for="userName">Kullanıcı Adı</label>
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input
+          type="text"
+          id="userName"
+          name="userName"
+          ngModel
+          #userName="ngModel"
+          required
+          placeholder="Kullanıcı Adınız"
+        />
+      </div>
+      <div class="error-message" *ngIf="form.submitted && userName.invalid">
+        <span *ngIf="userName.errors?.['required']"
+          >Kullanıcı adı zorunludur.</span
+        >
+      </div>
+    </div>
+
+    <!-- E-posta -->
+    <div class="form-group">
+      <label for="registerEmail">E-posta Adresi</label>
+      <div class="input-group">
+        <i class="fas fa-envelope"></i>
+        <input
+          type="email"
+          id="registerEmail"
+          name="email"
+          ngModel
+          #email="ngModel"
+          required
+          pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          placeholder="ornek@email.com"
+        />
+      </div>
+      <div class="error-message" *ngIf="form.submitted && email.invalid">
+        <span *ngIf="email.errors?.['required']"
+          >E-posta adresi zorunludur.</span
+        >
+        <span *ngIf="email.errors?.['pattern'] || email.errors?.['email']">
+          Geçerli bir e-posta adresi giriniz.
+        </span>
+      </div>
+    </div>
+
+    <!-- Şifre -->
+    <div class="form-group">
+      <label for="registerPassword">Şifre</label>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input
+          type="password"
+          id="registerPassword"
+          name="password"
+          ngModel
+          #password="ngModel"
+          required
+          placeholder="*******"
+        />
+      </div>
+      <div class="error-message" *ngIf="form.submitted && password.invalid">
+        <span *ngIf="password.errors?.['required']">Şifre zorunludur.</span>
+      </div>
+    </div>
+
+    <!-- Checkbox'lar -->
+    <div class="form-options">
+      <label class="checkbox-container">
+        <input type="checkbox" required ngModel name="terms" #terms="ngModel" />
+        <span class="checkmark"></span>
+        <a href="#">Kullanım Koşulları</a>'nı kabul ediyorum
+      </label>
+      <!-- Uyarı mesajı -->
+      <div class="error-message" *ngIf="form.submitted && terms.invalid">
+        <span>Kullanım koşullarını kabul etmelisiniz.</span>
+      </div>
+
+      <label class="checkbox-container">
+        <input type="checkbox" />
+        <span class="checkmark"></span>
+        Kampanya ve duyuru e-postalarını almak istiyorum
+      </label>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="auth-btn">
+      <i class="fas fa-user-plus"></i>
+      Kayıt Ol
+    </button>
+  </form>
+</div>

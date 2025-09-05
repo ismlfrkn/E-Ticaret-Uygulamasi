@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, signal, ViewEncapsulation }
 import Blank from '../../components/blank';
 import { BreadcrumbModel } from '@shared/models/breadcrumb.model';
 
+
 @Component({
   imports: [Blank],
   templateUrl: './home.html',

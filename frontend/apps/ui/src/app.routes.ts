@@ -1,7 +1,7 @@
 import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
-    {
+    {    
         path:"",
         loadComponent:()=>import("./pages/layouts/layouts"),
         children:[
@@ -12,6 +12,10 @@ export const appRoutes: Route[] = [
             {
                 path:":categoryKey",
                 loadComponent:()=>import("./pages/home/home")
+            },
+            {
+                path:'auth',
+                loadChildren:()=>import("./pages/auth/routes")
             }
         ]
     }
