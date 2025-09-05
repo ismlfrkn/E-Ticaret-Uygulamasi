@@ -17,7 +17,7 @@ export default class Register {
   readonly router = inject(Router);
 
 
-  signUp(form: NgForm) {
+signUp(form: NgForm) {
   if (!form.valid) return;
 
   const formData = form.value;
@@ -29,10 +29,26 @@ export default class Register {
     },
     error: (err) => {
       console.error('Hata oluştu:', err);
-      this.toast.showToast("Kayıt Başarısız", "Hesap oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.", 'error');
+
+      let message = "Hesap oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.";
+
+      // Backend'den gelen mesajı kontrol et, küçük harfe çeviriyoruz
+      const backendMessage = (err?.error?.message || '').toLowerCase();
+      console.log('Backend message:', backendMessage);  // <-- Buraya bakacağız
+
+      if (backendMessage.includes("username")) {
+        message = "Bu kullanıcı adı zaten kullanılıyor.";
+      } else if (backendMessage.includes("email")) {
+        message = "Bu e-posta adresi zaten kayıtlı.";
+      }
+
+      this.toast.showToast("Kayıt Başarısız", message, 'error');
     }
   });
 }
+
+
+
 
 
 }

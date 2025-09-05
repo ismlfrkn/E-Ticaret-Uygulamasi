@@ -296,17 +296,32 @@ app.get('/kullanici/listele', async (req, res) => {
 });
 
 
-// KULLANICI EKLEME (POST)
 app.post('/kullanici/ekle', async (req, res) => {
   try {
-    const user = new User(req.body); // Tek obje
-    const result = await user.save(); // MongoDB'ye ekle
+    const user = new User(req.body);
+    const result = await user.save();
     res.status(201).json(result);
   } catch (error) {
     console.error(error);
+
+    // MongoDB duplicate key hatası kontrolü
+    if (error.code === 11000) {
+      const duplicatedField = error.keyValue ? Object.keys(error.keyValue)[0] : null;
+      let fieldName = duplicatedField;
+
+      // userName ve email için Türkçe anlamlı mesaj
+      if (duplicatedField === 'userName') fieldName = 'username';
+      else if (duplicatedField === 'email') fieldName = 'email';
+
+      return res.status(400).json({ message: `${fieldName || 'Alan'} zaten kullanılıyor.` });
+    }
+
+    // Diğer hatalar için genel mesaj
     res.status(500).json({ message: 'Kullanıcı eklenemedi', error: error.message });
   }
 });
+
+
 
 // KULLANICI SİLME (DELETE)
 app.delete('/kullanici/:id', async (req, res) => {

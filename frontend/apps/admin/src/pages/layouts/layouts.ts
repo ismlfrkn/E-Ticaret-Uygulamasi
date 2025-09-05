@@ -38,8 +38,9 @@ export default class Layouts {
 
   cikisYap()
   {
-    localStorage.removeItem("kullanici");
+    localStorage.removeItem("admin");
     this.router.navigateByUrl("/login");
+    this.common.user.set(undefined);
   }
 
 }

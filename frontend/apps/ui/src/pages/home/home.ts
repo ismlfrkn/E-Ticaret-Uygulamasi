@@ -2,10 +2,12 @@ import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, sig
 import { ProductModel } from '@shared/models/product.model';
 import { TrCurrencyPipe } from 'tr-currency';
 import { httpResource } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Common } from '../../services/common';
+
 
 @Component({
-  imports: [TrCurrencyPipe],
+  imports: [TrCurrencyPipe,RouterLink],
   templateUrl: './home.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -14,6 +16,9 @@ export default class Home {
   readonly urunSayisi = 6;
   readonly aktifSayfa = signal(1);
   readonly categoryKey = signal<string | undefined>(undefined);
+  readonly common = inject(Common);
+  readonly user = computed(() => this.common.user());
+
 
   readonly result = httpResource<{ items: ProductModel[], totalCount: number }>(() => {
   const kategori = this.categoryKey();

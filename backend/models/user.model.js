@@ -13,10 +13,12 @@ const UserSchema = new mongoose.Schema({
     userName: {
         type: String,
         required: [true, "Lütfen kullanıcı adınızı giriniz"],
+        unique: true, 
     },
     email: {
         type: String,
         required: [true, "Lütfen email adresinizi giriniz"],
+        unique: true,   // <--- Buraya eklendi
     },
     password: {
         type: String,
