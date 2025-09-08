@@ -3124,3 +3124,28 @@ hr {
   font-size: 0.9em;
   margin-top: 4px;
 }
+
+.basket-count {
+    position: absolute;
+    top: -5px;       /* ikonun üstüne daha hoş yerleşim */
+    right: -15px;     /* sağdan taşma vermeden */
+    min-width: 18px;  /* küçük badge için minimum genişlik */
+    height: 18px;     /* yükseklik ile tam daire */
+    padding: 0 5px;   /* sayı çift haneli olursa taşma olmasın */
+    background: linear-gradient(135deg, #ff4d4f, #ff7875); /* canlı kırmızı degrade */
+    color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;  /* tam daire */
+    border: 2px solid #fff;  /* beyaz çerçeve ile öne çıkart */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* hafif gölge */
+    transition: transform 0.2s ease-in-out; /* animasyonlu büyüme */
+}
+
+.basket-count:hover {
+    transform: scale(1.2);  /* hoverda hafif büyüme efekti */
+}
+

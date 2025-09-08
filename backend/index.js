@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Product = require("./models/product.model.js")
 const Category = require("./models/category.model.js");
 const User = require("./models/user.model.js");
+const Basket = require("./models/basket.model.js");
 const cors = require('cors'); 
 
 const app = express();
@@ -390,12 +391,123 @@ app.get('/kullanici/:id', async (req, res) => {
   }
 });
 
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+app.post('/basket/ekle', async (req, res) => {
+  try {
+    const basket = new Basket(req.body);  // req.body zaten tüm alanları içeriyor
+    const result = await basket.save();
+    res.status(201).json(result);
+  } catch (error) {
+    console.error("Sepete ekleme hatası:", error);
+    res.status(500).json({
+      message: 'Sepete ürün eklenemedi',
+      error: error.message
+    });
+  }
+});
+
+
+
+// KULLANICIYA GÖRE SEPET LİSTELE
+app.get('/basket/listele/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    // Sepeti al + productId populate
+    const items = await Basket.find({ userId }).populate("productId");
+
+    // BasketModel formatına çevir
+    const result = items.map(b => ({
+      _id: b._id,
+      userId: b.userId,
+      productId: b.productId._id.toString(), // string olarak gönder
+      productName: b.productId.name,
+      productImageUrl: b.productId.imageUrl,
+      quantity: b.quantity,
+      price: b.productId.price
+    }));
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Sepet listeleme hatası:", error);
+    res.status(500).json({
+      message: "Sepet listelenemedi",
+      error: error.message
+    });
+  }
+});
+
+// Sepetteki ürünün miktarını güncelle
+app.put('/basket/guncelle/:basketId', async (req, res) => {
+  try {
+    const { basketId } = req.params;
+    const updateData = req.body; // { quantity: yeni değer, vs... }
+
+    const updated = await Basket.findByIdAndUpdate(
+      basketId,
+      { $set: updateData },
+      { new: true } // güncellenmiş dökümanı dön
+    );
+
+    if (!updated) {
+      return res.status(404).json({ message: "Sepet ürünü bulunamadı" });
+    }
+
+    res.status(200).json(updated);
+  } catch (error) {
+    console.error("Sepet güncelleme hatası:", error);
+    res.status(500).json({
+      message: "Sepet güncellenemedi",
+      error: error.message
+    });
+  }
+});
 
 
 
 
 
 
+
+// Sepetteki tek ürünü sil
+app.delete('/basket/sil/:basketId', async (req, res) => {
+  try {
+    const { basketId } = req.params;
+
+    const result = await Basket.findByIdAndDelete(basketId);
+    if (!result) {
+      return res.status(404).json({ message: "Ürün bulunamadı" });
+    }
+
+    res.status(200).json({ message: 'Ürün sepetten kaldırıldı' });
+  } catch (error) {
+    console.error("Sepet ürünü silme hatası:", error);
+    res.status(500).json({
+      message: "Ürün silinemedi",
+      error: error.message
+    });
+  }
+});
+
+
+// Tüm sepet ürünlerini listele (mapleme yok, direkt döndür)
+app.get('/basket/listele', async (req, res) => {
+  try {
+    // populate ile product bilgilerini getiriyoruz
+    const items = await Basket.find().populate("productId");
+
+    res.status(200).json(items);
+  } catch (error) {
+    console.error("Sepet listeleme hatası:", error);
+    res.status(500).json({
+      message: "Sepet listelenemedi",
+      error: error.message
+    });
+  }
+});
 
 
 

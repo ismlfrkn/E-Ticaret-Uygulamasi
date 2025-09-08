@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, ViewEncapsulation } from '@angular/core';
 import { ProductModel } from '@shared/models/product.model';
 import { TrCurrencyPipe } from 'tr-currency';
-import { httpResource } from '@angular/common/http';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Common } from '../../services/common';
+import { BasketModel } from '@shared/models/basket.model';
+import { FlexiToastService } from 'flexi-toast';
 
 
 @Component({
-  imports: [TrCurrencyPipe,RouterLink],
+  imports: [TrCurrencyPipe],
   templateUrl: './home.html',
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,6 +20,7 @@ export default class Home {
   readonly categoryKey = signal<string | undefined>(undefined);
   readonly common = inject(Common);
   readonly user = computed(() => this.common.user());
+  readonly router = inject(Router);
 
 
   readonly result = httpResource<{ items: ProductModel[], totalCount: number }>(() => {
@@ -69,4 +72,28 @@ export default class Home {
       this.aktifSayfa.update(p => p - 1);
     }
   }
+
+
+  readonly http = inject(HttpClient);
+  readonly toast = inject(FlexiToastService);
+
+  addBasket(data: ProductModel) 
+  {
+      const basket:BasketModel = {
+        userId:this.common.user()?._id,
+        productId: data._id,
+        productImageUrl: data.imageUrl,
+        productName: data.name,
+        quantity: 1,
+        price: data.price,
+    };
+     this.http.post("api/basket/ekle", basket).subscribe(res=>{
+      this.toast.showToast("Başarılı", "Ürün sepete eklendi.");
+      this.common.basketCount.update(p=>p+1);
+
+     });
+  }
+
+
+
 }

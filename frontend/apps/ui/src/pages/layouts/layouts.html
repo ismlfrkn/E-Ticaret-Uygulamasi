@@ -1,3 +1,4 @@
+
 <nav class="navbar">
   <div class="nav-container">
     <div class="nav-logo">
@@ -14,15 +15,21 @@
     }
     </ul>
     <div class="nav-icons">
-      <i class="fas fa-search"></i>
-      <i class="fas fa-shopping-cart"></i>
+      <i class="fas fa-search" title="Araştır"></i>
+      @if(user()){
+      <div style="position: relative;">
+        <i class="fas fa-shopping-cart" title="Sepet" routerLink="/basket"></i>
+        @if(basketCount() > 0){
+          <div class="basket-count">{{basketCount()}}</div>
+        }
+      </div>
+    }
       @if(user())
       {
          <i class="fas fa-power-off"tabindex="0" role="button" (keydown.enter)="logout()" (click)="logout()" title="Çıkış Yap"></i>
       }@else {
         <i class="fas fa-user" routerLink="/auth/login" title="Giriş Yap" ></i>
       }
-      
     </div>
   </div>
 </nav>

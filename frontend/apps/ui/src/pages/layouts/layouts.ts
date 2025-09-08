@@ -18,12 +18,14 @@ export default class Layouts {
   readonly data = computed(() => this.result.value() ?? []);
   readonly router = inject(Router);
   readonly common = inject(Common);
+  readonly basketCount = computed(()=>this.common.basketCount());
 
   logout()
   {
     localStorage.removeItem("kullanici");
     this.router.navigateByUrl("/auth/login");
     this.common.user.set(undefined);
+    this.common.basketCount.set(0);
   }
 
 }
