@@ -1,5 +1,6 @@
 import {
   ApplicationConfig,
+  LOCALE_ID,
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
@@ -14,5 +15,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideHttpClient(withInterceptors([endpointInterceptor])),
     provideRouter(appRoutes),
-  ],
+    {provide:LOCALE_ID,useValue:'tr'},
+  ],  
 };

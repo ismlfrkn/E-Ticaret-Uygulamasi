@@ -1,5 +1,4 @@
 <app-blank pageTitle="Kullanıcılar" [breadcrumbs]="[{title: 'Kullanıcılar', url: '/users', icon:'emoji_people'}]"/>
-
 <flexi-grid 
 [data]="data()"
 [loading]="loading()"
@@ -13,7 +12,6 @@ language="tr"
 <ng-template flexiGridCaptionCommandTemplate>
         <flexi-button  routerLink="/users/create" btnIcon="add" btnColor="primary" title="Kullanıcı Ekle" flexiTooltip></flexi-button>
     </ng-template>
-
     <flexi-grid-column field="firstName" title= "Ad"/>
     <flexi-grid-column field="lastName" title="Soyad"/>
     <flexi-grid-column field="userName" title="Kullanıcı Adı"/>
@@ -33,10 +31,8 @@ language="tr"
           </div>
     </ng-template>
   </flexi-grid-column>
-
     <ng-template flexiGridColumnCommandTemplate let-item>
         <flexi-button  routerLink="/users/edit/{{item._id}}"  btnIcon="edit" btnColor="info" btnSize="small" title="Güncelle" flexiTooltip/>
          <flexi-button (click)="sil(item._id)" btnIcon="delete" btnColor="danger" btnSize="small" title="Sil" flexiTooltip/>
     </ng-template>
-
 </flexi-grid>

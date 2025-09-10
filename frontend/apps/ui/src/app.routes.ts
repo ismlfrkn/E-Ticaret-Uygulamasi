@@ -6,9 +6,14 @@ export const appRoutes: Route[] = [
         path:"",
         loadComponent:()=>import("./pages/layouts/layouts"),
         children:[
-             {
+            {
                 path:"basket",
                 loadComponent:()=>import("./pages/baskets/baskets"),
+                canActivate:[basketGuard]
+            },
+            {
+                path:"payment",
+                loadComponent:()=>import("./pages/payment/payment"),
                 canActivate:[basketGuard]
             },
             {

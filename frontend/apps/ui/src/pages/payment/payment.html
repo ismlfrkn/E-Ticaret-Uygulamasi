@@ -1,0 +1,651 @@
+<title>Moriva | Ödeme Sayfası</title>
+@if(!showSuccess()) {
+<!-- Checkout Section -->
+<section class="checkout-section">
+  <div class="container">
+    <!-- Progress Steps -->
+    <div class="progress-bar">
+      <div class="step completed cursor" routerLink="/basket">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Sepet</span>
+      </div>
+      <div class="step active cursor" routerLink="/payment">
+        <i class="fas fa-credit-card"></i>
+        <span>Ödeme</span>
+      </div>
+      <div class="step">
+        <i class="fas fa-check-circle cursor"></i>
+        <span>Onay</span>
+      </div>
+    </div>
+    <form #form="ngForm" class="address-form" (ngSubmit)="pay(form)" autocomplete="off">
+      <div class="checkout-content">
+        <!-- Checkout Form -->
+
+        <div class="checkout-form">
+          <!-- Delivery Address -->
+          <div class="form-section">
+            <h3><i class="fas fa-map-marker-alt"></i> Teslimat Adresi</h3>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullName">Ad Soyad *</label>
+                <input
+                  type="text"
+                  [(ngModel)]="data().fullName"
+                  name="fullName"
+                  #fullName="ngModel"
+                  required
+                  placeholder="Adınız ve soyadınız"
+                />
+
+                @if ((form.submitted || fullName.touched) && fullName.invalid) {
+                <div class="error-message">
+                  @if (fullName.errors?.['required']) {
+                  <span>Ad Soyad alanı zorunludur.</span>
+                  }
+                </div>
+                }
+              </div>
+              <div class="form-group">
+                <label for="phoneNumber">Telefon *</label>
+                <input
+                  type="tel"
+                  [(ngModel)]="data().phoneNumber"
+                  name="phoneNumber"
+                  #phoneNumber="ngModel"
+                  required
+                  pattern="^05[0-9]{9}$"
+                  placeholder="(555)123 45 67"
+                />
+
+                @if ((form.submitted || phoneNumber.touched) &&
+                phoneNumber.invalid) {
+                <div class="error-message">
+                  @if (phoneNumber.errors?.['required']) {
+                  <span>Telefon numarası zorunludur.</span>
+                  } @if (phoneNumber.errors?.['pattern']) {
+                  <span
+                    >Telefon numarası 05 ile başlamalı ve toplam 11 hane
+                    olmalıdır.</span
+                  >
+                  }
+                </div>
+                }
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="city">İl *</label>
+
+                <select
+                  [(ngModel)]="data().city"
+                  name="city"
+                  #city="ngModel"
+                  required
+                  (ngModelChange)="setDistricts()"
+                >
+                  <option value="">İl seçiniz</option>
+                  <option *ngFor="let city of cities()" [value]="city.il_adi">
+                    {{ city.il_adi }}
+                  </option>
+                </select>
+
+                @if ((form.submitted || city.touched) && city.invalid) {
+                <div class="error-message">
+                  @if (city.errors?.['required']) {
+                  <span>İl seçimi zorunludur.</span>
+                  }
+                </div>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="district">İlçe *</label>
+                <select
+                  [(ngModel)]="data().district"
+                  name="district"
+                  #district="ngModel"
+                  required
+                  [disabled]="!this.data().city"
+                >
+                  <option value="">İlçe seçiniz</option>
+                  <option
+                    *ngFor="let district of districts()"
+                    [value]="district.ilce_adi"
+                  >
+                    {{ district.ilce_adi }}
+                  </option>
+                </select>
+
+                @if ((form.submitted || district.touched) && district.invalid) {
+                <div class="error-message">
+                  @if (district.errors?.['required']) {
+                  <span>İlçe seçimi zorunludur.</span>
+                  }
+                </div>
+                }
+              </div>
+
+              <div class="form-group">
+                <label for="fullAddress">Adres *</label>
+                <textarea
+                  [(ngModel)]="data().fullAddress"
+                  name="fullAddress"
+                  #fullAddress="ngModel"
+                  required
+                  placeholder="Mahalle, sokak, bina no, daire no"
+                ></textarea>
+
+                @if ((form.submitted || fullAddress.touched) &&
+                fullAddress.invalid) {
+                <div class="error-message">
+                  @if (fullAddress.errors?.['required']) {
+                  <span>Adres alanı zorunludur.</span>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Method -->
+          <div class="form-section">
+            <h3><i class="fas fa-credit-card"></i> Ödeme Yöntemi</h3>
+            <div class="payment-options">
+              <div class="payment-option">
+                <input
+                  type="radio"
+                  id="credit-card"
+                  name="payment"
+                  value="credit-card"
+                  checked
+                />
+                <label for="credit-card">
+                  <i class="fas fa-credit-card"></i>
+                  <span>Kredi/Banka Kartı</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Credit Card Form -->
+            <div class="card-form" id="card-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cardNumber">Kart Numarası *</label>
+                  <input
+                    type="text"
+                    placeholder="1234 5678 9012 3456"
+                    maxlength="16"
+                    [(ngModel)]="data().cardNumber"
+                    name="cardNumber"
+                    #cardNumber="ngModel"
+                    required
+                    pattern="^[0-9]{16}$"
+                  />
+
+                  @if ((form.submitted || cardNumber.touched) &&
+                  cardNumber.invalid) {
+                  <div class="error-message">
+                    @if (cardNumber.errors?.['required']) {
+                    <span>Kart numarası zorunludur.</span>
+                    } @if (cardNumber.errors?.['pattern']) {
+                    <span>Kart numarası 16 haneli olmalıdır.</span>
+                    }
+                  </div>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label for="cardHolderName">Kart Üzerindeki İsim</label>
+                  <input
+                    type="text"
+                    placeholder="AD SOYAD"
+                    [(ngModel)]="data().cardHolderName"
+                    name="cardHolderName"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="expireDate">Son Kullanma Tarihi *</label>
+                  <input
+                    type="text"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                    [(ngModel)]="data().expireDate"
+                    name="expireDate"
+                    #expireDate="ngModel"
+                    required
+                    pattern="^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])$"
+                  />
+
+                  @if ((form.submitted || expireDate.touched) &&
+                  expireDate.invalid) {
+                  <div class="error-message">
+                    @if (expireDate.errors?.['required']) {
+                    <span>Son kullanma tarihi zorunludur.</span>
+                    } @if (expireDate.errors?.['pattern']) {
+                    <span>Geçerli bir tarih giriniz (Gün/Ay).</span>
+                    }
+                  </div>
+                  }
+                </div>
+
+                <div class="form-group">
+                  <label for="cvv">CVV *</label>
+                  <input
+                    type="text"
+                    placeholder="123"
+                    maxlength="3"
+                    [(ngModel)]="data().cvv"
+                    name="cvv"
+                    #cvv="ngModel"
+                    required
+                    pattern="^[0-9]{3}$"
+                  />
+
+                  @if ((form.submitted || cvv.touched) && cvv.invalid) {
+                  <div class="error-message">
+                    @if (cvv.errors?.['required']) {
+                    <span>CVV zorunludur.</span>
+                    } @if (cvv.errors?.['pattern']) {
+                    <span>CVV 3 haneli olmalıdır.</span>
+                    }
+                  </div>
+                  }
+                </div>
+              </div>
+              <div class="form-group installment-options">
+                <label for="installmentOption">Taksit Seçenekleri *</label>
+                <select
+                  [(ngModel)]="data().installmentOption"
+                  name="installmentOption"
+                  #installmentOption="ngModel"
+                  required
+                >
+                  <option value="">Taksit seçiniz</option>
+                  <option value="1">Tek Çekim</option>
+                  <option value="3">3 Taksit</option>
+                  <option value="6">6 Taksit</option>
+                  <option value="9">9 Taksit</option>
+                  <option value="12">12 Taksit</option>
+                </select>
+
+                @if ((form.submitted || installmentOption.touched) &&
+                installmentOption.invalid) {
+                <div class="error-message">
+                  @if (installmentOption.errors?.['required']) {
+                  <span>Lütfen bir taksit seçeneği belirleyin.</span>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Agreement -->
+          <div class="form-section">
+            <div class="agreements">
+              <div class="agreement-item">
+                <input
+                  type="checkbox"
+                  ngModel
+                  name="terms"
+                  #terms="ngModel"
+                  required
+                />
+                <label for="terms">
+                  <a href="#">Kullanım Koşulları</a>'nı okudum ve kabul ediyorum
+                </label>
+                @if (form.submitted && terms.invalid) {
+                <div class="error-message">
+                  <span>Kullanım koşullarını kabul etmelisiniz.</span>
+                </div>
+                }
+              </div>
+
+              <div class="agreement-item">
+                <input
+                  type="checkbox"
+                  ngModel
+                  name="privacy"
+                  #privacy="ngModel"
+                  required
+                />
+                <label for="privacy">
+                  Kişisel verilerimin işlenmesine onay veriyorum
+                </label>
+
+                @if (form.submitted && privacy.invalid) {
+                <div class="error-message">
+                  <span
+                    >Kişisel verilerinizin işlenmesine onay vermelisiniz.</span
+                  >
+                </div>
+                }
+              </div>
+
+              <div class="agreement-item">
+                <input type="checkbox" id="marketing" />
+                <label for="marketing">
+                  Kampanya ve duyuru e-postalarını almak istiyorum
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="checkout-summary">
+          <div class="summary-card">
+            <h3>Sipariş Özeti</h3>
+
+            <!-- Order Items -->
+            <div class="order-items">
+              @for(val of basketData();track val._id) {
+              <div class="order-item">
+                <img [src]="val.productImageUrl" [alt]="val.productName" />
+                <div class="item-info">
+                  <h4>{{val.productName}}</h4>
+                  <span>{{val.quantity}}adet</span>
+                </div>
+                <span class="item-total"
+                  >{{val.price*val.quantity| trCurrency:'₺':false }}</span
+                >
+              </div>
+              }
+            </div>
+
+            <hr />
+
+            <div class="summary-row">
+              <span>Ara Toplam:</span>
+              <span>{{common.total()| trCurrency:'₺':false}}</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Kargo:</span>
+              <span class="free">Ücretsiz</span>
+            </div>
+
+            <div class="summary-row">
+              <span>KDV (14%):</span>
+              <span>{{common.kdv() | trCurrency:'₺':false}}</span>
+            </div>
+
+            <div class="summary-row">
+              <span>İndirim:</span>
+              <span>{{common.indirimTutari()| trCurrency:'₺':false}}</span>
+            </div>
+
+            <hr />
+
+            <div class="summary-row total">
+              <span>Toplam:</span>
+              <span>{{common.totalWithDiscount() | trCurrency:'₺':false}}</span>
+            </div>
+
+            <button type="submit" class="complete-order-btn">
+              <i class="fas fa-lock"></i>
+              Siparişi Tamamla
+            </button>
+
+            <div class="security-info">
+              <i class="fas fa-shield-alt"></i>
+              <span>256-bit SSL ile güvenli ödeme</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+} @else {
+<!-- Order Confirmation Section -->
+<section class="order-section">
+  <div class="container">
+    <!-- Success Message -->
+    <div class="success-message">
+      <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h1>Siparişiniz Başarıyla Oluşturuldu!</h1>
+      <p>Siparişiniz için teşekkür ederiz. Sipariş detaylarınız aşağıdadır.</p>
+    </div>
+
+    <!-- Order Details -->
+    <div class="order-content">
+      <!-- Order Info -->
+      <div class="order-info">
+        <div class="order-header">
+          <h2>Sipariş Detayları</h2>
+          <div class="order-number">
+            <span>Sipariş No: <strong>{{data()._id}}</strong></span>
+            <span
+              >Tarih:
+              <strong
+                >{{data().olusturulmaTarihi | date:'dd MMM yyyy'}}</strong
+              ></span
+            >
+          </div>
+        </div>
+
+        <!-- Order Status -->
+        <div class="order-status">
+          <h3><i class="fas fa-truck"></i> Sipariş Durumu</h3>
+          <div class="status-timeline">
+            <div class="status-step completed">
+              <div class="status-icon">
+                <i class="fas fa-check"></i>
+              </div>
+              <div class="status-info">
+                <h4>Sipariş Alındı</h4>
+                <span>21 Haziran 2025, 14:30</span>
+              </div>
+            </div>
+            <div class="status-step active">
+              <div class="status-icon">
+                <i class="fas fa-cog fa-spin"></i>
+              </div>
+              <div class="status-info">
+                <h4>Hazırlanıyor</h4>
+                <span>Tahmini: 1-2 saat</span>
+              </div>
+            </div>
+            <div class="status-step">
+              <div class="status-icon">
+                <i class="fas fa-truck"></i>
+              </div>
+              <div class="status-info">
+                <h4>Kargoya Verildi</h4>
+                <span>Tahmini: Yarın</span>
+              </div>
+            </div>
+            <div class="status-step">
+              <div class="status-icon">
+                <i class="fas fa-home"></i>
+              </div>
+              <div class="status-info">
+                <h4>Teslim Edildi</h4>
+                <span>Tahmini: 2-3 gün</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ordered Items -->
+        <div class="ordered-items">
+          <h3><i class="fas fa-box"></i> Sipariş Edilen Ürünler</h3>
+          <div class="items-list">
+            @for(val of basketData();track val._id) {
+            <div class="order-item">
+              <img [src]="val.productImageUrl" [alt]="val.productName" />
+              <div class="item-details">
+                <h4>{{val.productName}}</h4>
+                <span class="quantity">Adet: {{val.quantity}}</span>
+              </div>
+              <div class="item-price">
+                <span>{{val.price*val.quantity | trCurrency:'₺':false}}</span>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- Delivery Info -->
+        <div class="delivery-info">
+          <h3><i class="fas fa-map-marker-alt"></i> Teslimat Bilgileri</h3>
+          <div class="delivery-details">
+            <div class="delivery-address">
+              <h4>Teslimat Adresi:</h4>
+              <p>
+                <strong>{{data().fullName}}</strong><br />
+                {{data().fullAddress}}<br />
+                {{data().city}}/{{data().district}}<br />
+                Telefon: {{data().phoneNumber}}
+              </p>
+            </div>
+            <div class="delivery-method">
+              <h4>Kargo Firması:</h4>
+              <p><strong>Aras Kargo</strong></p>
+              <p>Kargo Takip Kodu: <strong>123456789</strong></p>
+              <button class="track-btn">
+                <i class="fas fa-search"></i>
+                Kargo Takip
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary Sidebar -->
+      <div class="order-summary-sidebar">
+        <div class="summary-card">
+          <h3>Sipariş Özeti</h3>
+
+          <div class="summary-row">
+            <span>Ara Toplam:</span>
+            <span>{{common.total()| trCurrency:'₺':false}}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>Kargo:</span>
+            <span class="free">Ücretsiz</span>
+          </div>
+
+          <div class="summary-row">
+            <span>KDV (14%):</span>
+            <span>{{common.kdv() | trCurrency:'₺':false}}</span>
+          </div>
+
+          <div class="summary-row">
+            <span>İndirim:</span>
+            <span>{{common.indirimTutari()| trCurrency:'₺':false}}</span>
+          </div>
+
+          <hr />
+
+          <div class="summary-row total">
+            <span>Toplam:</span>
+            <span>{{common.totalWithDiscount()| trCurrency:'₺':false}}</span>
+          </div>
+
+          <div class="payment-info">
+            <h4>Ödeme Bilgileri</h4>
+            <p><i class="fas fa-credit-card"></i> Kredi Kartı</p>
+            <p>**** **** **** {{ data().cardNumber.slice(-4) }}</p>
+            <p>
+              {{ data().installmentOption === '1' ? 'Tek Çekim' :
+              data().installmentOption + ' Taksit' }}
+            </p>
+          </div>
+          <div class="order-actions">
+            <button class="download-invoice-btn">
+              <i class="fas fa-download"></i>
+              Fatura İndir
+            </button>
+            <button class="print-order-btn">
+              <i class="fas fa-print"></i>
+              Yazdır
+            </button>
+          </div>
+
+          <div class="help-section">
+            <h4>Yardıma mı ihtiyacınız var?</h4>
+            <button class="contact-btn">
+              <i class="fas fa-headset"></i>
+              Müşteri Hizmetleri
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="next-steps">
+      <h2>Bundan Sonra Ne Olacak?</h2>
+      <div class="steps-grid">
+        <div class="step-card">
+          <i class="fas fa-envelope"></i>
+          <h3>E-posta Onayı</h3>
+          <p>Sipariş onay e-postası e-posta adresinize gönderildi.</p>
+        </div>
+        <div class="step-card">
+          <i class="fas fa-box-open"></i>
+          <h3>Hazırlık Süreci</h3>
+          <p>Ürünleriniz dikkatle paketleniyor ve kargoya hazırlanıyor.</p>
+        </div>
+        <div class="step-card">
+          <i class="fas fa-shipping-fast"></i>
+          <h3>Kargo Süreci</h3>
+          <p>
+            Ürünleriniz kargoya verildiğinde SMS ile bilgilendirileceksiniz.
+          </p>
+        </div>
+        <div class="step-card">
+          <i class="fas fa-star"></i>
+          <h3>Değerlendirme</h3>
+          <p>Ürünlerinizi aldıktan sonra deneyiminizi paylaşabilirsiniz.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recommended Products -->
+    <div class="recommended-section">
+      <h2>Size Özel Öneriler</h2>
+      <div class="recommended-grid">
+        <div class="recommended-item">
+          <img
+            style="object-fit: contain"
+            src="https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MT223?wid=1144&hei=1144&fmt=jpeg&qlt=90&.v=NXc3N25JOGtjM0J6SklvcWVKZ1djZ2tuVHYzMERCZURia3c5SzJFOTlPalpQUlZGaitSQjJVekdLRWQ5QlBiN3pvcXhpclRxK2UwREhrbXZvemdZcXc"
+            alt="iPhone Kılıf"
+          />
+          <h4>iPhone 15 Pro Kılıfı</h4>
+          <span class="rec-price">299 ₺</span>
+          <button class="add-rec-btn">Sepete Ekle</button>
+        </div>
+        <div class="recommended-item">
+          <img
+            style="object-fit: contain"
+            src="https://productimages.hepsiburada.net/s/516/375-375/110000571700613.jpg"
+            alt="Şarj Aleti"
+          />
+          <h4>Hızlı Şarj Adaptörü</h4>
+          <span class="rec-price">199 ₺</span>
+          <button class="add-rec-btn">Sepete Ekle</button>
+        </div>
+        <div class="recommended-item">
+          <img
+            style="object-fit: contain"
+            src="https://productimages.hepsiburada.net/s/152/375-375/110000107996531.jpg"
+            alt="Wireless Mouse"
+          />
+          <h4>Kablosuz Mouse</h4>
+          <span class="rec-price">149 ₺</span>
+          <button class="add-rec-btn">Sepete Ekle</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+}

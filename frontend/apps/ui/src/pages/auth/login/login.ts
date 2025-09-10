@@ -30,7 +30,7 @@ export default class Login {
       // Kullanıcı bilgisini localStorage'a kaydet
       localStorage.setItem("kullanici", JSON.stringify(res));
       this.common.user.set(res);
-      this.common.getBasketCount();
+      this.common.loadBasket();
       // Ana sayfaya yönlendirir.
       this.router.navigateByUrl('/');
     },

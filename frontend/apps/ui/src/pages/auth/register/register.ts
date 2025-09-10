@@ -34,7 +34,7 @@ signUp(form: NgForm) {
 
       // Backend'den gelen mesajı kontrol et, küçük harfe çeviriyoruz
       const backendMessage = (err?.error?.message || '').toLowerCase();
-      console.log('Backend message:', backendMessage);  // <-- Buraya bakacağız
+      console.log('Backend message:', backendMessage);  
 
       if (backendMessage.includes("username")) {
         message = "Bu kullanıcı adı zaten kullanılıyor.";

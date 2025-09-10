@@ -3122,7 +3122,7 @@ hr {
 .error-message {
   color: #d9534f;
   font-size: 0.9em;
-  margin-top: 4px;
+  margin-top: 0px;
 }
 
 .basket-count {
@@ -3147,5 +3147,9 @@ hr {
 
 .basket-count:hover {
     transform: scale(1.2);  /* hoverda hafif büyüme efekti */
+}
+
+.cursor{
+    cursor: pointer;
 }
 
